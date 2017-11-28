@@ -17,10 +17,28 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
                 .httpBasic();
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER")
+                .and()
+                .withUser("dave").password("davepassword").roles("ADMIN");
+    }
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .and()
+//                .httpBasic();
+//    }
 
 
 //    @Override
